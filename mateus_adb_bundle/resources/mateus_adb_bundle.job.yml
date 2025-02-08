@@ -1,0 +1,32 @@
+# The main job for mateus_adb_bundle.
+resources:
+  jobs:
+    mateus_adb_bundle_job:
+      name: mateus_adb_bundle_job
+
+      parameters:
+        - name: managed_location
+          default: abfss://ted-desafio-final-lh-data@indstadblake.dfs.core.windows.net/desafio_final_lh
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      email_notifications:
+        on_failure:
+          - mateus.marin@indicium.tech
+
+      tasks:
+        - task_key: extraction_task
+          existing_cluster_id: 0114-120134-85ri2w59
+          notebook_task:
+            notebook_path: ../src/extraction_notebook.ipynb
+
+        - task_key: transformation_task
+          depends_on:
+            - task_key: extraction_task
+          existing_cluster_id: 0114-120134-85ri2w59
+          notebook_task:
+            notebook_path: ../src/transformation_notebook.ipynb

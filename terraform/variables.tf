@@ -10,6 +10,6 @@ variable "databricks_token" {
 }
 
 variable "full_name" {
-    description = "Your full name, used for catalog naming"
+    description = "Full name, used for catalog naming"
     type        = string
 }

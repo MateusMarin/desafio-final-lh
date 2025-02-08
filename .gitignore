@@ -1,0 +1,21 @@
+# Ignorar a venv do Python
+venv/
+__pycache__/
+
+# Ignorar arquivos sensíveis do Terraform
+terraform/terraform.tfvars
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/crash.log
+terraform/.terraform.lock.hcl
+
+# Ignorar arquivos temporários do Databricks
+databricks_bundle/.databricks/
+databricks_bundle/.dbx/
+databricks_bundle/.bundle/
+databricks_bundle/*.log
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db

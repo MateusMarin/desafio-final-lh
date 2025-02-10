@@ -1,0 +1,31 @@
+# Databricks asset bundle definition for mateus_adb_bundle.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
+bundle:
+  name: mateus_adb_bundle
+  uuid: 4c3861b8-f1bc-4c97-bd19-f9b6eb4d96e8
+
+include:
+  - resources/*.yml
+  - src/**/*.ipynb  # Garante que todos os notebooks sejam incluídos automaticamente
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-1770141292543280.0.azuredatabricks.net
+    permissions:
+      - user_name: mateus.marin@indicium.tech
+        level: CAN_MANAGE
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-1770141292543280.0.azuredatabricks.net
+      root_path: /Workspace/Users/mateus.marin@indicium.tech/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: mateus.marin@indicium.tech
+        level: CAN_MANAGE
+    run_as:
+      user_name: mateus.marin@indicium.tech

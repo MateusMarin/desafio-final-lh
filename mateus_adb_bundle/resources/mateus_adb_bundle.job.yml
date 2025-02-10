@@ -1,0 +1,33 @@
+resources:
+  jobs:
+    mateus_adb_bundle_job:
+      name: mateus_adb_bundle_job
+
+      parameters:
+        - name: managed_location
+          default: abfss://ted-desafio-final-lh-data@indstadblake.dfs.core.windows.net/desafio_final_lh
+
+      email_notifications:
+        on_start:
+          - mateus.marin@indicium.tech
+        on_success:
+          - mateus.marin@indicium.tech
+        on_failure:
+          - mateus.marin@indicium.tech
+
+      tasks:
+        - task_key: extraction_task
+          existing_cluster_id: 0114-120134-85ri2w59
+          notebook_task:
+            notebook_path: ../src/extraction_notebook.ipynb
+          max_retries: 3
+          retry_on_timeout: true
+
+        - task_key: transformation_task
+          depends_on:
+            - task_key: extraction_task
+          existing_cluster_id: 0114-120134-85ri2w59
+          notebook_task:
+            notebook_path: ../src/transformation_notebook.ipynb
+          max_retries: 3
+          retry_on_timeout: true

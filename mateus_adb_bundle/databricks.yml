@@ -1,28 +1,28 @@
-# This is a Databricks asset bundle definition for mateus_adb_bundle.
+# Databricks asset bundle definition for mateus_adb_bundle.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
 bundle:
   name: mateus_adb_bundle
   uuid: 4c3861b8-f1bc-4c97-bd19-f9b6eb4d96e8
 
 include:
   - resources/*.yml
+  - src/**/*.ipynb  # Garante que todos os notebooks sejam incluídos automaticamente
 
 targets:
   dev:
-    # The default target uses 'mode: development' to create a development copy.
-    # - Deployed resources get prefixed with '[dev my_user_name]'
-    # - Any job schedules and triggers are paused by default.
-    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
     mode: development
     default: true
     workspace:
       host: https://adb-1770141292543280.0.azuredatabricks.net
+    permissions:
+      - user_name: mateus.marin@indicium.tech
+        level: CAN_MANAGE
 
   prod:
     mode: production
     workspace:
       host: https://adb-1770141292543280.0.azuredatabricks.net
-      # We explicitly specify /Workspace/Users/mateus.marin@indicium.tech to make sure we only have a single copy.
       root_path: /Workspace/Users/mateus.marin@indicium.tech/.bundle/${bundle.name}/${bundle.target}
     permissions:
       - user_name: mateus.marin@indicium.tech
